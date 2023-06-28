@@ -1,6 +1,6 @@
 # PartRetrievalAndAssembly
 
-The complete code will be avaliable soon 
+The complete code and instructions will be avaliable soon 
 
 
 
