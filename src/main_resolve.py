@@ -164,92 +164,13 @@ def get_final_eval_score(chamfer_error, k):
     final_score = chamfer_error + k * complexity_weight 
     return final_score
 
-def post_optim_mesh_and_pc(part_meshes, part_pcs, shape_pc, post_max_iteration=150):
-    shape_pc = torch.tensor(shape_pc, device=device, dtype=torch.float)
-    part_pcs = torch.tensor(part_pcs, device=device, dtype=torch.float)
-
-    part_scales, part_up_angles, part_translations = post_optim(part_pcs, shape_pc, post_max_iteration)
-    
-    for i in range(len(part_meshes)):
-        part_vertices = torch.tensor(part_meshes[i].vertices, device=device, dtype=torch.float)
-        transformed_part_vertices = assemble_parts(torch.stack([part_vertices]), torch.stack([part_scales[i]]), torch.stack([part_up_angles[i]]), torch.stack([part_translations[i]]))[0]
-        part_meshes[i].vertices = to_numpy(transformed_part_vertices)
-
-    optimed_part_pcs = []
-    for i in range(len(part_pcs)):
-        transformed_part_pc = assemble_parts(torch.stack([part_pcs[i]]), torch.stack([part_scales[i]]), torch.stack([part_up_angles[i]]), torch.stack([part_translations[i]]))[0] 
-        optimed_part_pcs.append(transformed_part_pc)
-    
-    return part_meshes, optimed_part_pcs
-
-def post_optim_pc(part_pcs, shape_pc, post_max_iteration=150):
-    shape_pc = torch.tensor(shape_pc, device=device, dtype=torch.float)
-    part_pcs = torch.tensor(part_pcs, device=device, dtype=torch.float)
-    part_scales, part_up_angles, part_translations = post_optim(part_pcs, shape_pc, post_max_iteration)
-    
-    optimed_part_pcs = []
-    for i in range(len(part_pcs)):
-        transformed_part_pc = assemble_parts(torch.stack([part_pcs[i]]), torch.stack([part_scales[i]]), torch.stack([part_up_angles[i]]), torch.stack([part_translations[i]]))[0] 
-        optimed_part_pcs.append(transformed_part_pc)
-    return optimed_part_pcs
-
-def post_optim_mesh(part_meshes, part_pcs, shape_pc, post_max_iteration=150):    
-    part_scales, part_up_angles, part_translations = post_optim(part_pcs, shape_pc, post_max_iteration)
-    for i in range(len(part_meshes)):
-        part_vertices = torch.tensor(part_meshes[i].vertices, device=device, dtype=torch.float)
-        transformed_part_vertices = assemble_parts(torch.stack([part_vertices]), torch.stack([part_scales[i]]), torch.stack([part_up_angles[i]]), torch.stack([part_translations[i]]))[0]
-        part_meshes[i].vertices = to_numpy(transformed_part_vertices) 
-    return part_meshes
-
-def post_optim(part_pcs, shape_pc, post_max_iteration):
-    
-    shape_pc = torch.tensor(shape_pc, device=device, dtype=torch.float)
-    part_pcs = torch.tensor(part_pcs, device=device, dtype=torch.float)
-    part_scales = torch.ones((len(part_pcs), 3), device=device, requires_grad=True)
-    part_up_angles = torch.zeros(len(part_pcs), device=device, requires_grad=True)
-    part_translations = torch.zeros((len(part_pcs), 3), device=device, requires_grad=True)
-    optimizer = torch.optim.Adam([part_scales]+[part_up_angles]+[part_translations], lr=post_lr)
-
-    pre_loss = 9999
-
-    for post_iteration in range(post_max_iteration):
-
-        #print('post_iter ', post_iteration)
-
-        transformed_part_pcs = assemble_parts(part_pcs, part_scales, part_up_angles, part_translations)
-
-        recon_shape_pc = transformed_part_pcs.reshape(-1, 3)
-        recon_error, _ = chamfer_distance(torch.stack([shape_pc]), torch.stack([recon_shape_pc]))
-
-        transformed_part_pcs = transformed_part_pcs.unsqueeze(dim=0)
-        transformed_part_pcs = transformed_part_pcs.permute(1, 0, 2, 3)
-        #collision_errors = get_collision_distance_explicit(transformed_part_pcs)
-        #loss = recon_error + 0.1*collision_weight * torch.mean(collision_errors)
-        loss = recon_error 
-
-        print('loss', loss.item())
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-
-        #if abs(loss.item() - pre_loss) < 0.00001:
-            #break
-
-        pre_loss = loss.item()
-
-    return part_scales, part_up_angles, part_translations
-
-
 def adjust_filter(part_meshes, part_syms, part_translations, part_scales, part_angles, shape_mesh, shape_vol_pc, shape_id, use_remove=True):
 
     retrieval_dict = {}
     retrieval_dict['k'] = len(part_meshes)
 
     retrieval_dict['shape_mesh'] = shape_mesh
-    #retrieval_dict['shape_recon'] = shape_recon
-    
-    #retrieval_dict['pred_part_meshes'] = pred_part_meshes
-    
+
     sym_info = [0]*len(part_meshes)
     part_meshes_before = copy.deepcopy(part_meshes)
     for i in range(len(part_meshes_before)):
@@ -339,12 +260,10 @@ def adjust_filter(part_meshes, part_syms, part_translations, part_scales, part_a
                 break
     
     if use_vol_filter:
-        #part_meshes_after = post_optim_mesh(part_meshes_after, part_pcs_after, shape_vol_pc, 500)
         recon_shape_mesh_after = merge_meshes(part_meshes_after)
         recon_shape_vol_pc_after = volumetric_sample_mesh(recon_shape_mesh_after, shape_vol_pc.shape[0])
         chamfer_error_after, _ = chamfer_distance(torch.stack([torch.tensor(recon_shape_vol_pc_after, device=device, dtype=torch.float)]), torch.stack([torch.tensor(shape_vol_pc, device=device, dtype=torch.float)]))
     else:
-        #part_meshes_after = post_optim_mesh(part_meshes_after, part_pcs_after, shape_sur_pc, 500)
         recon_shape_mesh_after = merge_meshes(part_meshes_after)
         recon_shape_sur_pc_after, _, _ = surface_sample_mesh(recon_shape_mesh_after, shape_vol_pc.shape[0])
         chamfer_error_after, _ = chamfer_distance(torch.stack([torch.tensor(recon_shape_sur_pc_after, device=device, dtype=torch.float)]), torch.stack([torch.tensor(shape_sur_pc, device=device, dtype=torch.float)]))
@@ -394,35 +313,10 @@ def resolve_shape(shape_id, shape_ids, part_meshes, part_vol_pcs, part_sur_pcs, 
         shape_mesh = shape_meshes[shape_ids.index(shape_id)]
         shape_sur_pc = shape_sur_pcs[shape_ids.index(shape_id)]
         shape_vol_pc = shape_vol_pcs[shape_ids.index(shape_id)]
-                
-        #if os.path.isfile(os.path.join(run_mega_iteration_folder, str(shape_id)+'seg.joblib')):
-            #shape_seg = joblib.load(os.path.join(run_mega_iteration_folder, str(shape_id)+'seg.joblib'))
-        #else:
-            #shape_seg = None
-        #if os.path.isfile(os.path.join(run_mega_iteration_folder, str(shape_id)+'recon.joblib')):
-            #shape_recon = joblib.load(os.path.join(run_mega_iteration_folder, str(shape_id)+'recon.joblib'))
-        #else:
-            #shape_recon = None
-        #if os.path.isfile(os.path.join(run_mega_iteration_folder, str(shape_id)+'pred_part_meshes.joblib')):
-            #pred_part_meshes = joblib.load(os.path.join(run_mega_iteration_folder, str(shape_id)+'pred_part_meshes.joblib'))
-        #else:
-            #pred_part_meshes = None
-        
+
         retrieval_dict = adjust_filter(retrieved_part_meshes, part_syms, part_translations, part_scales, part_angles, shape_mesh, shape_vol_pc, shape_id, False)
         retrieval_dict['part_indices'] = part_indices
         joblib.dump(retrieval_dict, os.path.join(shape_folder, str(shape_id)+'_'+str(k)+'.joblib'))
-
-        #if shape_id not in shape_to_best:
-            #shape_to_best[shape_id] = retrieval_dict
-        #else:
-            #print('update_best', )
-            #if retrieval_dict['final_score'] < shape_to_best[shape_id]['final_score']:
-                #shape_to_best[shape_id] = copy.deepcopy(retrieval_dict)
-
-        #print('best final_score', shape_to_best[shape_id]['final_score'])
-        #print('final_score', retrieval_dict['final_score'])
-    
-    #joblib.dump(shape_to_best[shape_id], os.path.join(summary_folder, str(shape_id)+'.joblib'))
 
 def finalize_resolve_shape(shape_id, shape_ids, part_meshes, part_vol_pcs, part_sur_pcs, shape_meshes, shape_vol_pcs, shape_sur_pcs, summary_folder, results_folder):
     
@@ -492,8 +386,6 @@ def resolve(data_dir, exp_folder, part_dataset, part_category, part_count, shape
         results = Parallel(n_jobs=2)(delayed(resolve_shape)(shape_id, train_shape_ids, part_meshes, part_vol_pcs, part_sur_pcs, train_shape_meshes, train_shape_vol_pcs, train_shape_sur_pcs, train_summary_folder, train_results_folder) for shape_id in eval_train_shape_ids)
     else:
         for shape_id in eval_train_shape_ids:
-            #if shape_id != '1848':
-                #continue
             resolve_shape(shape_id, train_shape_ids, part_meshes, part_vol_pcs, part_sur_pcs, train_shape_meshes, train_shape_vol_pcs, train_shape_sur_pcs, train_summary_folder, train_results_folder)    
             finalize_resolve_shape(shape_id, train_shape_ids, part_meshes, part_vol_pcs, part_sur_pcs, train_shape_meshes, train_shape_vol_pcs, train_shape_sur_pcs, train_summary_folder, train_results_folder)    
     
@@ -508,8 +400,6 @@ def resolve(data_dir, exp_folder, part_dataset, part_category, part_count, shape
         results = Parallel(n_jobs=2)(delayed(resolve_shape)(shape_id, test_shape_ids, part_meshes, part_vol_pcs, part_sur_pcs, test_shape_meshes, test_shape_vol_pcs, test_shape_sur_pcs, test_summary_folder, test_results_folder) for shape_id in test_shape_ids)
     else:
         for shape_id in test_shape_ids:
-            #if shape_id != '1848':
-                #continue
             resolve_shape(shape_id, test_shape_ids, part_meshes, part_vol_pcs, part_sur_pcs, test_shape_meshes, test_shape_vol_pcs, test_shape_sur_pcs, test_summary_folder, test_results_folder)    
             finalize_resolve_shape(shape_id, test_shape_ids, part_meshes, part_vol_pcs, part_sur_pcs, test_shape_meshes, test_shape_vol_pcs, test_shape_sur_pcs, test_summary_folder, test_results_folder)    
 

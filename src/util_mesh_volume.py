@@ -41,67 +41,6 @@ def merge_meshes(meshes):
         base_mesh = merge2mesh(base_mesh, meshes[i])
     return base_mesh
 
-def volumetric_sample_mesh_octree(mesh, sample_count):
-
-    shape_pc, _, _ = surface_sample_mesh(mesh, 2048)
-    tree = Octree()
-    tree.build(shape_pc)
-    bounds, weights = tree.get_leaf_node_bounds()
-    total_weight = 0
-    for i in range(len(weights)):
-        total_weight += weights[i]
-
-    all_pc = None
-
-    print('number of nodes', len(bounds))
-    
-    for i in range(len(bounds)):
-
-        print('processing node', i)
-
-        bound = bounds[i]
-        weight = weights[i]
-
-        t = np.array([(bound[0]+bound[1])*0.5, (bound[2]+bound[3])*0.5, (bound[4]+bound[5])*0.5])
-        t = np.expand_dims(t, axis=1)
-        rotmat = np.eye(3)
-        z = np.array([(bound[1]-bound[0])*0.5, (bound[3]-bound[2])*0.5, (bound[5]-bound[4])*0.5])
-        
-        extents = z * 2.01
-        transform = np.concatenate((rotmat, t), axis=1)
-        pad_vector = np.array([0,0,0,1])
-        pad_vector = np.expand_dims(pad_vector, axis=0)
-        transform = np.concatenate((transform, pad_vector), axis=0)
-    
-        node_sample_count = int(weight/total_weight*sample_count)+1
-        print('node_sample_count', node_sample_count)
-
-        node_pc = None
-        node_pre_pc_count = 0
-        while  node_pc is None or len(node_pc) <= node_sample_count:
-            rec_pc = trimesh.sample.volume_rectangular(extents, node_sample_count*5, transform)
-            labels = points_in_mesh(mesh, rec_pc)
-            inside_pc = rec_pc[labels==True]
-
-            if node_pc is None:
-                node_pc = inside_pc
-            else:
-                node_pc = np.concatenate((node_pc, inside_pc), axis=0)
-            
-            if len(node_pc) == node_pre_pc_count:
-                break
-
-            node_pre_pc_count = len(node_pc)
-                
-        if all_pc is None:
-            all_pc = node_pc
-        else:
-            all_pc = np.concatenate((all_pc, node_pc), axis=0)
-
-    np.random.shuffle(all_pc)
-    final_sampled_pc = all_pc[0:sample_count]
-    return final_sampled_pc
-
 def volumetric_sample_mesh(mesh, sample_count,wait_time = 600):
 
     to_origin, extents = trimesh.bounds.oriented_bounds(mesh)
