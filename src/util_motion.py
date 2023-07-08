@@ -1,9 +1,7 @@
 
 import sys
-from matplotlib.pyplot import xscale
-
-from torch._C import dtype
 sys.path.append('..')
+
 import torch
 import torch.nn
 from scipy.spatial.distance import cdist

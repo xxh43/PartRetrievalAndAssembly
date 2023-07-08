@@ -1,27 +1,19 @@
 
-import argparse
+
 import copy
 import os
-import shutil
 import time
 import time
-from pathlib import Path
-import gc
 import joblib
-import matplotlib.pyplot as plt
 import numpy as np
 from numpy import arange
-import scipy
-from sklearn import cluster, get_config
 from main_ours_pretrain import *
 from joblib import Parallel, delayed
 from util_collision import *
-
 from util_motion import *
 from util_vis import *
 from scipy.spatial.transform import Rotation as R
-torch.set_printoptions(precision=10)
-
+from collections import OrderedDict, defaultdict
 import argparse
 import copy
 import gc
@@ -30,7 +22,7 @@ import os
 import shutil
 import time
 from pathlib import Path
-
+import networkx as nx
 import joblib
 import numpy as np
 import torch
@@ -41,11 +33,7 @@ from torch import nn
 from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
-
-
 from util_vis import *
-
-bce_loss = torch.nn.BCELoss()
 import argparse
 import copy
 import gc
@@ -53,26 +41,12 @@ import math
 import os
 import shutil
 import time
-from operator import pos
 from pathlib import Path
-
-#import sklearn.external.joblib as extjoblib
-#import sklearn.external.joblib as extjoblib
 import joblib
-import matplotlib.pyplot as plt
 import numpy as np
-import scipy
-from scipy import spatial, stats
-
-
 from util_motion import *
 from util_vis import *
-
 import time
-
-
-torch.set_printoptions(precision=10)
-
 import argparse
 import copy
 import gc
@@ -81,7 +55,6 @@ import os
 import shutil
 import time
 from pathlib import Path
-
 import joblib
 import numpy as np
 import torch
@@ -92,9 +65,6 @@ from torch import nn
 from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
-
-
-
 import torch
 import torchvision
 from scipy.spatial.transform import Rotation as R
@@ -108,6 +78,8 @@ from config import *
 from main_common import *
 from data_manager import *
 import time
+
+torch.set_printoptions(precision=10)
 
 print('pytorch version', torch.__version__)
 

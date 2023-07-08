@@ -1,51 +1,13 @@
 
-import argparse
-import copy
-import gc
-import math
+
 import os
-import shutil
-import time
-from operator import pos
 from pathlib import Path
-
-#import sklearn.external.joblib as extjoblib
-#import sklearn.external.joblib as extjoblib
 import joblib
-import matplotlib.pyplot as plt
-
-import numpy as np
-import scipy
-from scipy.spatial import distance
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from networkx.algorithms import similarity
-from networkx.algorithms.distance_measures import center
-from networkx.algorithms.planarity import top_of_stack
-from networkx.algorithms.smallworld import sigma
-from numpy.core.fromnumeric import argmax, argmin, shape
-from scipy import spatial, stats
-from scipy.spatial.distance import braycurtis, cdist
-#from chamfer_distance import *
-#from chamfer_distance import *
-from scipy.spatial.transform import Rotation as R
-from sklearn.cluster import KMeans
-from sklearn.manifold import TSNE
-from sklearn.mixture import GaussianMixture
-from torch import norm, tensor
-from torch._C import dtype
-from torch.autograd import Variable
-from torch.utils.data import DataLoader
-
-#from trimesh import *
-#from dataset_partnet import *
-
 from util_motion import *
 from util_vis import *
-
-torch.set_printoptions(precision=10)
-
 import argparse
 import copy
 import gc
@@ -54,7 +16,6 @@ import os
 import shutil
 import time
 from pathlib import Path
-
 import joblib
 import numpy as np
 import torch
@@ -62,13 +23,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from scipy.spatial.distance import cdist
 from torch import nn
-from torch.autograd import Variable
-from torch.nn import functional as F
-from torch.utils.data import DataLoader
-
 from util_vis import *
-
-
 import argparse
 import copy
 import gc
@@ -78,9 +33,6 @@ import shutil
 import time
 from operator import pos
 from pathlib import Path
-
-#import sklearn.external.joblib as extjoblib
-#import sklearn.external.joblib as extjoblib
 import joblib
 import matplotlib.pyplot as plt
 import numpy as np
@@ -88,32 +40,14 @@ import scipy
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torchvision
-from networkx.algorithms.distance_measures import center
-from networkx.algorithms.planarity import top_of_stack
-from networkx.algorithms.smallworld import sigma
-from numpy.core.fromnumeric import argmin, shape
-#from pytorch3d.loss.chamfer import chamfer_distance_one_direction
-from scipy import spatial, stats
 from scipy.spatial.distance import braycurtis, cdist
-#from chamfer_distance import *
-#from chamfer_distance import *
-from scipy.spatial.transform import Rotation as R
-from sklearn.cluster import KMeans
-from sklearn.manifold import TSNE
-from sklearn.mixture import GaussianMixture
 from torch import nn, tensor
 from torch._C import dtype
 from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
-
-
 from util_motion import *
 from util_vis import *
-
-torch.set_printoptions(precision=10)
-
 import argparse
 import copy
 import gc
@@ -122,7 +56,6 @@ import os
 import shutil
 import time
 from pathlib import Path
-
 import joblib
 import numpy as np
 import torch
@@ -138,15 +71,9 @@ import torch
 from config import *
 import torchvision
 from main_common import *
-
-print(torch.__version__)
-print(torchvision.__version__)
-import threading, queue
-
-import pytorch3d
 from pytorch3d.loss import chamfer_distance
 
-from torch.nn.functional import normalize
+torch.set_printoptions(precision=10)
 
 
 class VAE(nn.Module):

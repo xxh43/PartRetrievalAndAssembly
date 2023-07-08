@@ -1,17 +1,11 @@
 
 
 
-from audioop import avg
-import numpy as np
-import trimesh
-import torch
-import json
 
-from collections import defaultdict
-import networkx as nx
-from scipy.spatial.distance import cdist
+import numpy as np
+import torch
 from util_vis import *
-from sklearn.decomposition import PCA
+
 
 part_point_num = 1024
 

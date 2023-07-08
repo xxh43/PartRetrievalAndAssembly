@@ -1,33 +1,18 @@
-from cProfile import label
-import random
+
 import numpy as np
 import os
-
 import plotly.graph_objects as go
-import plotly.express as px
-import plotly.figure_factory as ff 
-
-import pandas as pd
 import pyrender
-
 import plotly.express as px
-
 import numpy as np
-import argparse
 import matplotlib.pyplot as plt
 import os
-
 from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 import torch
-import matplotlib.font_manager as font_manager
-#from util_data import to_numpy
-#print('colorscales', colorscales)
-#exit()
 import matplotlib.pyplot as plt
 import trimesh
 from util_motion import rotate_with_axis_center_angle
-# axes color
 
 print(torch.__version__)
 

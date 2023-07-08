@@ -1,29 +1,15 @@
-from cgi import test
-from genericpath import exists
+
 import torch
 import numpy as np
-
 import os
-import shutil
 import joblib
-
 from util_vis import *
 from config import * 
-
-from joblib import Parallel, delayed
-import multiprocessing
-from sklearn.cluster import AgglomerativeClustering
 from util_motion import *
-from pytorch3d.loss import chamfer_distance
-from collections import defaultdict
 import joblib
 sys.modules['sklearn.externals.joblib'] = joblib
 import six
 sys.modules['sklearn.externals.six'] = six
-
-import random
-#from util_mesh_volume import *
-#from util_mesh_surface import *
 import csv
 
 def read_split(split_file):

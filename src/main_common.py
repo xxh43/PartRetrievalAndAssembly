@@ -1,137 +1,48 @@
 
-import argparse
-from cgi import test
+
 import copy
-from dis import dis
-from functools import partial
-import gc
-import math
 import os
 from re import A
-import shutil
-import time
-from operator import pos
-from pathlib import Path
-
-#import sklearn.external.joblib as extjoblib
-#import sklearn.external.joblib as extjoblib
 import joblib
-import matplotlib.pyplot as plt
-
 import numpy as np
 from numpy import arange
-from numpy import real
-from numpy import require
-from numpy import concatenate
-import scipy
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from networkx.algorithms import similarity
-from networkx.algorithms.distance_measures import center
-from networkx.algorithms.planarity import top_of_stack
-from networkx.algorithms.smallworld import sigma
-from numpy.core.fromnumeric import argmax, argmin, shape
-from scipy import spatial, stats
-from scipy.spatial.distance import braycurtis, cdist
-
 from scipy.spatial.transform import Rotation as R
-from sklearn.cluster import KMeans
-from sklearn.manifold import TSNE
-from sklearn.mixture import GaussianMixture
-from torch import tensor
-from torch._C import dtype
-from torch.autograd import Variable
-from torch.utils.data import DataLoader
 from main_ours_pretrain import *
-
-#from trimesh import *
-#from dataset_partnet import *
 from util_collision import *
-from joblib import Parallel, delayed
-
-
 from util_motion import *
 from util_vis import *
 from scipy.spatial.transform import Rotation as R
-import gc
-
-torch.set_printoptions(precision=10)
-
-import argparse
 import copy
 import gc
-import math
 import os
-import shutil
-import time
-from pathlib import Path
-
 import joblib
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from scipy.spatial.distance import cdist
-from torch import nn
-from torch.autograd import Variable
-from torch.nn import functional as F
-from torch.utils.data import DataLoader
-from scipy.stats import multivariate_normal
-
 from util_vis import *
-
-bce_loss = torch.nn.BCELoss()
-import argparse
 import copy
 import gc
-import math
 import os
-import shutil
-import time
-from operator import pos
-from pathlib import Path
-
-#import sklearn.external.joblib as extjoblib
-#import sklearn.external.joblib as extjoblib
 import joblib
 import matplotlib.pyplot as plt
 import numpy as np
-import scipy
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torchvision
-from networkx.algorithms.distance_measures import center
-from networkx.algorithms.planarity import top_of_stack
-from networkx.algorithms.smallworld import sigma
-from numpy.core.fromnumeric import argmin, shape
-
-from scipy import spatial, stats
 from scipy.spatial.distance import braycurtis, cdist
 from scipy.spatial.transform import Rotation as R
-from sklearn.cluster import KMeans
-from sklearn.manifold import TSNE
-from sklearn.mixture import GaussianMixture
-from torch import nn, tensor
-from torch._C import dtype
 from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
-
-#from trimesh import *
-#from dataset_partnet import *
-
 from util_motion import *
 from util_vis import *
-
-#from util_mesh_volume import *
 import time
 from scipy.spatial.transform import Rotation
-#from util_mesh_volume import *
-
-torch.set_printoptions(precision=10)
-
 import argparse
 import copy
 import gc
@@ -140,7 +51,6 @@ import os
 import shutil
 import time
 from pathlib import Path
-
 import joblib
 import numpy as np
 import torch
@@ -151,34 +61,21 @@ from torch import nn
 from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
-
 from util_vis import *
-
-bce_loss = torch.nn.BCELoss()
 import torch
 import torchvision
 from scipy.spatial.transform import Rotation as R
 from torch import nn
 from torch.nn import functional as F
-
 from pytorch3d import *
 from pytorch3d.loss import chamfer_distance
-
-from networkx.algorithms import bipartite
-
 from main_ours_pretrain import *
-from scipy.spatial import KDTree
-
 from util_collision import *
-
-from scipy.spatial import distance
-
 from config import *
-
 import matplotlib.pyplot as plt
-#from data_manager import *
 
-
+torch.set_printoptions(precision=10)
+bce_loss = torch.nn.BCELoss()
 
 def get_y_aligned_bbox(pc):
 

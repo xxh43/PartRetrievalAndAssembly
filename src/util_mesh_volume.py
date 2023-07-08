@@ -8,7 +8,6 @@ import math
 import time
 from mesh_contain.inside_mesh import check_mesh_contains
 from util_mesh_surface import *
-#from util_vis import display_meshes, display_pcs
 
 def get_submesh(mesh, face_indices):
     submesh = copy.deepcopy(mesh)

@@ -1,161 +1,50 @@
 
-import argparse
-from cgi import test
-import copy
-from dis import dis
-from functools import partial
-import gc
-import math
-import os
-import shutil
-import time
-from operator import pos
 
-#import sklearn.external.joblib as extjoblib
-#import sklearn.external.joblib as extjoblib
+
+import os
 import joblib
 import matplotlib.pyplot as plt
-import numpy as np
-from numpy import arange
-from numpy import real
-from numpy import require
-from numpy import concatenate
-import scipy
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
-
-from scipy.spatial.transform import Rotation as R
-from sklearn.cluster import KMeans
-from sklearn.manifold import TSNE
-from sklearn.mixture import GaussianMixture
-from torch import tensor
-from torch._C import dtype
-from torch.autograd import Variable
-from torch.utils.data import DataLoader
-#from main_common import post_process
 from main_ours_pretrain import *
-
-#from trimesh import *
 from util_collision import *
-#from util_mesh import *
-
 from util_motion import *
 from util_vis import *
 from scipy.spatial.transform import Rotation as R
-
-torch.set_printoptions(precision=10)
-
-import argparse
-import copy
-import gc
-import math
 import os
-import shutil
-import time
-
 import joblib
-import numpy as np
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from scipy.spatial.distance import cdist
-from torch import nn
 from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
-
-
 from util_vis import *
-
-bce_loss = torch.nn.BCELoss()
-import argparse
-import copy
-import gc
-import math
-import os
-import shutil
-import time
-from operator import pos
-
-#import sklearn.external.joblib as extjoblib
-#import sklearn.external.joblib as extjoblib
 import joblib
 import matplotlib.pyplot as plt
-import numpy as np
-import scipy
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torchvision
-
 from scipy.spatial.transform import Rotation as R
-from sklearn.cluster import KMeans
-from sklearn.manifold import TSNE
-from sklearn.mixture import GaussianMixture
-from torch import nn, tensor
-from torch._C import dtype
 from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
-
-#from trimesh import *
-
 from util_motion import *
 from util_vis import *
-
-import time
-
-
-torch.set_printoptions(precision=10)
-
-import argparse
-import copy
-import gc
-import math
-import os
-import shutil
-import time
-from pathlib import Path
-
 import joblib
-import numpy as np
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from scipy.spatial.distance import cdist
-from torch import nn
 from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
-
-
 from util_vis import *
-
-bce_loss = torch.nn.BCELoss()
 import torch
-import torchvision
 from scipy.spatial.transform import Rotation as R
-from torch import nn
-from torch.nn import functional as F
-
 from pytorch3d import *
-from pytorch3d.loss import chamfer_distance
-
-from networkx.algorithms import bipartite
 from util_mesh_surface import *
 from util_mesh_volume import *
 from main_ours_pretrain import *
-
 from main_common import *
-from scipy.spatial import KDTree
 from util_collision import *
 from config import *
-
-from scipy.spatial import distance
 from data_manager import *
 from config import *
+
+torch.set_printoptions(precision=10)
+
 
 def render_shape(shape_id, dict, folder, spec, is_summary):
     if is_summary:
