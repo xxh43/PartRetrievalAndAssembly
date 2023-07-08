@@ -30,6 +30,12 @@ https://drive.google.com/file/d/1r4mPxUJfxwv-9SpbMXLO287Vjuoqfxdc/view?usp=shari
 
 Create a folder PartRetrievalAndAssembly/data, put and unzip the download file in PartRetrievalAndAssembly/data 
 
+The data is organized as:
+
+1: "final_shapes", each folder in final_shapes corresponds to one shape, the shape is represented as (1) mesh (2) surface point cloud (3) volumetric point cloud. All shapes are zero centered, upward aligned and rotated to align its symmetrical plane with plane with normal (1, 0, 0)
+
+2: "final_parts", each folder in final_parts corresponds to one shape, then each sub folder within each folder corresponds to one part of this shape. the part is represented as (1) mesh (2) surface point cloud (3) volumetric point cloud. All parts are zero centered, upward aligned and rotated to align its bbox standard world coordinates
+
 Run the demo --------------------------------- :
 
 cd src/demo
@@ -38,9 +44,9 @@ cd src/demo
 
 The results will be stored in src/demo/ours 
 
-Additional notes ----------------------------- :
+The config.py file controls all hyperparameters
 
-Both shapes are parts are supposed to be upward aligned.
+Additional notes ----------------------------- :
 
 More instructions and code maybe avaliable later
 
