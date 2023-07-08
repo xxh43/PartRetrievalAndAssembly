@@ -16,7 +16,7 @@ pyrender
 
 You may also need to build mesh_contain by:
 
-(1) cd mesh_contain
+(1) cd src/mesh_contain
 
 (2) python setup.py build_ext --inplace 
 
@@ -28,15 +28,15 @@ Please first download a processed dataset containing shapes and parts from PartN
 
 https://drive.google.com/file/d/1r4mPxUJfxwv-9SpbMXLO287Vjuoqfxdc/view?usp=sharing
 
-create a folder "data" in "PartRetrievalAndAssembly" , put and unzip the download file in PartRetrievalAndAssembly/data 
+Create a folder PartRetrievalAndAssembly/data, put and unzip the download file in PartRetrievalAndAssembly/data 
 
 Run the demo --------------------------------- :
 
-cd demo
+cd src/demo
 
 . run_faucet.sh
 
-the results will be stored in demo/ours 
+The results will be stored in src/demo/ours 
 
 Additional notes ----------------------------- :
 
