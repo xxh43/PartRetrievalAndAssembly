@@ -5,3 +5,4 @@ python ../main_ours_direct.py --k 4
 python ../main_ours_direct.py --k 6
 python ../main_ours_direct.py --k 8
 python ../main_resolve.py
+python ../main_evaluate.py
