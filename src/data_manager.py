@@ -163,7 +163,7 @@ def get_parts(data_dir, dataset, category, count, shape_ids=[], all_formats=Fals
                 filtered_part_meshes.append(part_meshes[i])
                 filtered_part_sur_pcs.append(part_sur_pcs[i])
 
-        joblib.dump(part_to_shapeIds, os.path.join('..', str(dataset)+'_'+str(category)+'_'+str(count)+'_part_to_shapeIds.joblib'))
+        #joblib.dump(part_to_shapeIds, os.path.join('..', str(dataset)+'_'+str(category)+'_'+str(count)+'_part_to_shapeIds.joblib'))
 
         return filtered_part_meshes, filtered_part_vol_pcs, filtered_part_sur_pcs
     

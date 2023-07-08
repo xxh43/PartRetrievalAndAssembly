@@ -39,27 +39,15 @@ debug = False
 to_vis = False
 to_fig = False
 use_parallel = False
-if debug:
-    pretrain_max_epoch = 2
-    retrieval_max_iteration = 2
-    post_max_iteration = 2
-    init_epoch = 2
-    train_epoch = 2
-    supervise_threshold = 100
-    random_train_epoch = 2
-    supervise_max_iteration = 2
-    cluster_max_iteration = 2
-else:
-    pretrain_max_epoch = 3001
-    retrieval_max_iteration = 200 #1000
-    post_max_iteration = 150 #1000
-    init_epoch = 10001
-    train_epoch = 401
-    supervise_threshold = 0.004
-    random_train_epoch = 100
-    supervise_max_iteration = 3001
-    cluster_max_iteration = 100
-
+pretrain_max_epoch = 3001
+retrieval_max_iteration = 200 #1000
+post_max_iteration = 150 #1000
+init_epoch = 10001
+train_epoch = 401
+supervise_threshold = 0.004
+random_train_epoch = 100
+supervise_max_iteration = 3001
+cluster_max_iteration = 100
 
 cur_dir = os.path.dirname(__file__)
 

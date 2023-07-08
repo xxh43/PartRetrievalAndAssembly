@@ -2,8 +2,6 @@
 
 The complete code and instructions will be avaliable soon 
 
-
-
 required libraries:
 
 joblib
@@ -17,3 +15,6 @@ pytorch3d
 plotly
 pandas
 pyrender
+
+
+to run the demo
