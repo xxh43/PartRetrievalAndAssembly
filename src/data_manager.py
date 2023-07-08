@@ -6,7 +6,6 @@ import numpy as np
 import os
 import shutil
 import joblib
-from util_file import write_items_to_file
 
 from util_vis import *
 from config import * 
@@ -26,16 +25,15 @@ import random
 #from util_mesh_volume import *
 #from util_mesh_surface import *
 import csv
-cur_dir = os.path.dirname(__file__)
 
-def read_split(dataset, category, train_shape_count):
+def read_split(split_file):
 
     source_ids = []
     train_ids = []
     test_ids = []
     val_ids = []
 
-    split_file = os.path.join(cur_dir, 'split_'+str(dataset)+'_'+str(category)+'.csv')
+    split_file = split_file
 
     print('split_file', split_file)
     with open(split_file, newline='') as f:

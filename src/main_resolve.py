@@ -39,7 +39,7 @@ from joblib import Parallel, delayed
 #from trimesh import *
 from util_collision import *
 #from util_mesh import *
-from util_file import *
+
 from util_motion import *
 from util_vis import *
 from scipy.spatial.transform import Rotation as R
@@ -65,7 +65,7 @@ from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
 
-from util_file import *
+
 from util_vis import *
 
 bce_loss = torch.nn.BCELoss()
@@ -102,7 +102,7 @@ from torch.nn import functional as F
 from torch.utils.data import DataLoader
 
 #from trimesh import *
-from util_file import *
+
 from util_motion import *
 from util_vis import *
 
@@ -132,7 +132,7 @@ from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
 
-from util_file import *
+
 from util_vis import *
 
 bce_loss = torch.nn.BCELoss()
@@ -347,14 +347,8 @@ def resolve(data_dir, exp_folder, part_dataset, part_category, part_count, shape
 
     print('resolve .... ')
 
-    _, train_shape_ids, test_shape_ids, _ = read_split(shape_dataset, shape_category, train_shape_count)
-    if part_dataset == 'partnet':
-        if part_category == shape_category:
-            source_shape_ids, _, _, _ = read_split(part_dataset, part_category, train_shape_count)
-        else:
-            source_shape_ids, _, _, _ = read_split(part_dataset, part_category, None)
-    else:
-        source_shape_ids = []
+    _, train_shape_ids, test_shape_ids, _ = read_split(global_args.split_file)
+    source_shape_ids, _, _, _ = read_split(global_args.split_file)
 
     print('part_dataset', part_dataset)
     print('part_category', part_category)

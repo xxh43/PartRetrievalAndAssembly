@@ -6,7 +6,6 @@ import os
 import shutil
 import joblib
 
-cur_dir = os.path.dirname(__file__)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 def to_numpy(item):
@@ -33,7 +32,7 @@ retrieval_lr = 0.02
 post_lr = 0.0005
 enc_dim = 64
 overlap_threshold = 0.5
-symmetry_threshold = 0.006
+symmetry_threshold = 0.004
 
 debug = False
 to_vis = False
@@ -49,12 +48,12 @@ random_train_epoch = 100
 supervise_max_iteration = 3001
 cluster_max_iteration = 100
 
-cur_dir = os.path.dirname(__file__)
 
 import argparse
 global_parser = argparse.ArgumentParser()
-global_parser.add_argument("--data_dir", type=str, default='../data')
+global_parser.add_argument("--data_dir", type=str, default='../../data')
 global_parser.add_argument("--exp_dir", type=str, default='ours')
+global_parser.add_argument("--split_file", type=str, default='split_partnet_faucet.csv')
 
 global_parser.add_argument("--dataset_option", type=str, default='')
 global_parser.add_argument("--part_dataset", type=str, default='partnet')

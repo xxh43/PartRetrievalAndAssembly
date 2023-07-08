@@ -16,7 +16,7 @@ from sklearn import cluster, get_config
 from main_ours_pretrain import *
 from joblib import Parallel, delayed
 from util_collision import *
-from util_file import *
+
 from util_motion import *
 from util_vis import *
 from scipy.spatial.transform import Rotation as R
@@ -42,7 +42,7 @@ from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
 
-from util_file import *
+
 from util_vis import *
 
 bce_loss = torch.nn.BCELoss()
@@ -64,7 +64,7 @@ import numpy as np
 import scipy
 from scipy import spatial, stats
 
-from util_file import *
+
 from util_motion import *
 from util_vis import *
 
@@ -93,7 +93,7 @@ from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
 
-from util_file import *
+
 
 import torch
 import torchvision
@@ -575,8 +575,6 @@ def get_best_connected_components_new(region_pc, other_region_pcs, target_pc, ta
 
 def compute_symmetry_infos(target_pcs, is_train, exp_folder, category):
 
-    symmetry_threshold = 0.0025
-
     normals1 = torch.tensor([1,0,0], device=device, dtype=torch.float).unsqueeze(dim=0)
 
     sym_shape_indices = []
@@ -899,16 +897,10 @@ def direct_train(exp_folder, folder, category, target_pcs, target_indices, part_
 
 def run(data_dir, exp_folder, part_dataset, part_category, part_count, shape_dataset, shape_category, train_shape_count, test_shape_count, eval_on_train_shape_count, k):
 
-    _, train_shape_ids, test_shape_ids, _ = read_split(shape_dataset, shape_category, train_shape_count)
+    _, train_shape_ids, test_shape_ids, _ = read_split(global_args.split_file)
     
-    if part_dataset == 'partnet':
-        if part_category == shape_category:
-            source_shape_ids, _, _, _ = read_split(part_dataset, part_category, train_shape_count)
-        else:
-            source_shape_ids, _, _, _ = read_split(part_dataset, part_category, None)
-    else:
-        source_shape_ids = []
-
+    source_shape_ids, _, _, _ = read_split(global_args.split_file)
+    
     print('train_shape_ids', train_shape_ids)
 
     print('part_dataset', part_dataset)

@@ -40,7 +40,7 @@ from main_ours_pretrain import *
 #from trimesh import *
 from util_collision import *
 #from util_mesh import *
-from util_file import *
+
 from util_motion import *
 from util_vis import *
 from scipy.spatial.transform import Rotation as R
@@ -66,7 +66,7 @@ from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
 
-from util_file import *
+
 from util_vis import *
 
 bce_loss = torch.nn.BCELoss()
@@ -101,7 +101,7 @@ from torch.nn import functional as F
 from torch.utils.data import DataLoader
 
 #from trimesh import *
-from util_file import *
+
 from util_motion import *
 from util_vis import *
 
@@ -130,7 +130,7 @@ from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
 
-from util_file import *
+
 from util_vis import *
 
 bce_loss = torch.nn.BCELoss()
@@ -228,7 +228,7 @@ def visulize_shape(shape_id, summary_folder):
 
 def generate_visulizations(data_dir, exp_folder, part_dataset, part_category, part_count, shape_dataset, shape_category, train_shape_count, test_shape_count, eval_on_train_shape_count):
 
-    source_shape_ids, train_shape_ids, test_shape_ids, _ = read_split(shape_dataset, shape_category, train_shape_count)
+    source_shape_ids, train_shape_ids, test_shape_ids, _ = read_split(global_args.split_file)
 
     eval_train_shape_ids = train_shape_ids[0:eval_on_train_shape_count]
     summary_folder = os.path.join(exp_folder, 'train_summary')

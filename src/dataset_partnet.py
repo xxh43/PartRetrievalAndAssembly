@@ -5,7 +5,6 @@ import trimesh
 import networkx as nx
 from collections import defaultdict
 import copy
-from objects import *
 import os
 from util_mesh_surface import *
 import joblib

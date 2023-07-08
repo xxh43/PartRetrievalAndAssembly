@@ -40,7 +40,7 @@ from torch.utils.data import DataLoader
 
 #from trimesh import *
 #from dataset_partnet import *
-from util_file import *
+
 from util_motion import *
 from util_vis import *
 
@@ -65,7 +65,7 @@ from torch import nn
 from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
-from util_file import *
+
 from util_vis import *
 
 
@@ -108,7 +108,7 @@ from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
 
-from util_file import *
+
 from util_motion import *
 from util_vis import *
 

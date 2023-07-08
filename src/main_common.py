@@ -50,7 +50,7 @@ from main_ours_pretrain import *
 from util_collision import *
 from joblib import Parallel, delayed
 
-from util_file import *
+
 from util_motion import *
 from util_vis import *
 from scipy.spatial.transform import Rotation as R
@@ -79,7 +79,6 @@ from torch.nn import functional as F
 from torch.utils.data import DataLoader
 from scipy.stats import multivariate_normal
 
-from util_file import *
 from util_vis import *
 
 bce_loss = torch.nn.BCELoss()
@@ -122,7 +121,7 @@ from torch.utils.data import DataLoader
 
 #from trimesh import *
 #from dataset_partnet import *
-from util_file import *
+
 from util_motion import *
 from util_vis import *
 
@@ -153,7 +152,6 @@ from torch.autograd import Variable
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
 
-from util_file import *
 from util_vis import *
 
 bce_loss = torch.nn.BCELoss()

@@ -6,8 +6,6 @@ from torch._C import dtype
 sys.path.append('..')
 import torch
 import torch.nn
-from objects import *
-from util_math import *
 from scipy.spatial.distance import cdist
 from config import *
 import copy

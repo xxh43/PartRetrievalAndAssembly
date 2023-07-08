@@ -2,7 +2,6 @@ from cProfile import label
 import random
 import numpy as np
 import os
-from util_file import read_file_to_items
 
 import plotly.graph_objects as go
 import plotly.express as px
