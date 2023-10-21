@@ -53,6 +53,8 @@ Additional notes ----------------------------- :
 More instructions and code maybe avaliable later
 
 
+IMPORTANT NOTES: If you use your data, please make sure they follow the same assumption : all geometries are upward aligned to (0, 1, 0), and all symmetrical planes of all geometries have normal (1, 0, 0). 
+
 
 
 
