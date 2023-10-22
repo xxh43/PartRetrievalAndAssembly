@@ -36,6 +36,8 @@ The data is organized as:
 
 2: "final_parts", each folder in final_parts corresponds to one shape, then each sub folder within each folder corresponds to one part of this shape. the part is represented as (1) mesh (2) surface point cloud (3) volumetric point cloud. All parts are zero centered, upward aligned and rotated to align its bbox standard world coordinates
 
+IMPORTANT NOTES: If you use your data, please make sure they follow the same assumption : all geometries are upward aligned to (0, 1, 0), and the symmetry planes of all geometries have normal (1, 0, 0). 
+
 Run the demo --------------------------------- :
 
 cd src/demo
@@ -50,6 +52,8 @@ Additional notes ----------------------------- :
 
 More instructions and code maybe avaliable later
 
+
+IMPORTANT NOTES: If you use your data, please make sure they follow the same assumption : all geometries are upward aligned to (0, 1, 0), and the symmetry planes of all geometries have normal (1, 0, 0). 
 
 
 
